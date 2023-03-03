@@ -104,6 +104,9 @@
             "answers":""
         },
         {
+            "answers":""
+        },
+        {
             "answers":[
                 ["A. 雖然很陰暗，但溫暖的風給你一股親切感，讓你並不害怕","A"],
                 ["B. 鬱鬱蔥蔥的森林，有道月光照射在一束鈴蘭","B"],
@@ -215,21 +218,24 @@
     })
 
     function nextFn(imgarr){
-        //let q1 = document.getElementById("option");
-        var obj=document.getElementsByName("option");
-        var selected=[];
-        if(true){
+        if(i==imgarr.length-1){
+            i = 0;
+            img.src = imgarr[0];
+            questions.innerText = questionsArr[0].question;
             $("#options").empty();
-            for(let x = 0; x < answersArr[i].answers.length; x++){
-                //options.innerText = answersArr[i].answers[x];
-                $("#options").append(//用append 把選項內容放到options
-                        "<input name = 'options' type = 'radio' value ="+x+"> "+//點擊選擇這個按鈕 裡面的選擇的內容x
-                        "<label>"+answersArr[i].answers[x][0]+//第零題的第x個選項的內容
-                        "</label><br><br>"//br->空行(換行)
-                );
-            }
+            alert("感謝觀看，點擊\"確認\"重新開始");
+            return;
         }
         i++;
+        $("#options").empty();
+        for(let x = 0; x < answersArr[i].answers.length; x++){
+            //options.innerText = answersArr[i].answers[x];
+            $("#options").append(//用append 把選項內容放到options
+                "<input name = 'options' type = 'radio' value ="+x+"> "+//點擊選擇這個按鈕 裡面的選擇的內容x
+                "<label>"+answersArr[i].answers[x][0]+//第零題的第x個選項的內容
+                "</label><br><br>"//br->空行(換行)
+            );
+        }
         img.src = imgarr[i];
         questions.innerText = questionsArr[i].question;
         
