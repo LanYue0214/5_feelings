@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>物藥而浴</title>
+        <link rel="shortcut icon" href="img/logo.jpg" type="image/x-icon">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="script/question.js"></script>
+        <style>
+            div{
+                text-align: center;
+                width: 1920;
+                height: 1080;
+            }
+
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 style="text-align: center;">微光森林</h1>
+        <h2 id="question" style="text-align: center;"></h2>
+        <div>
+            <!-- img loading: 
+                Reference by https://blog.csdn.net/weixin_44058725/article/details/118412359
+            -->
+            <img src="img/main.png" id="img" alt="">    
+            <div id="options"></div>
+        </div>
+        
+        <!--
+            <link rel="stylesheet" href="style.css">
+            <script src="script/main.js"></script>
+        <script src="script/main.js"> </script>
+        <img id="img" style="float: center" alt="">
+        <button>Next</button>
+        <input style="float: right" type="button" value="Next" id="next">
+        -->
+        <input type="button" id="next" style="float: right; width:120px; height:40px;" value="Next"></button>
+    </body>
+</html>
+<script>
+    // below is about question
+    let questionsArr = [
+        {
+            "question":""
+        },
+        {
+            "question":"深夜時分，晚風吹得較為強勁，今天的夜晚特別的疲倦，唯一能撐起眼皮的就只剩檯燈的晝光燈泡而已……"
+        },
+        {
+            "question":"閉一下就好? 眼前一黑，好像閉上眼好了一會兒……"
+        },
+        {
+            "question":"再張眼，朦朧的視線卻透著不一樣的景色，這不是本來的房間阿?"
+        },
+        {
+            "question":"你處在一片森林中央的草地上，正值午夜，視線卻特別清楚特別舒適，你也不怎麼意外。"
+        },
+        {
+            "question":"這時晚風用很舒服的力道推著你往前看看，於是你緩緩的站起身來……\n發現周遭景色與你平常所看見的都市叢林不同，你認為你眼前的是什麼?"
+        },
+        {
+            "question":"接著，你聽見森林另頭有些騷動，好奇心帶著你走向前瞧瞧\n撥開草叢那瞬間，你發現了什麼？"
+        },
+        {
+            "question":"牠過來拉了拉你的衣角，好像想去哪\n你跟著牠來到一棵充滿金黃葉子的樹下，你覺得樹洞裡面有什麼？"
+        },
+        {
+            "question":"攤開藏寶圖，尋著路線探險，你發現目的地是一棟木屋，門上夾著一張邀請卡"
+        },
+        {
+            "question":"仔細看上面居然寫著你的名字！木屋裡的一切都是精心準備好招待你的，雖然不清楚是誰，但文字透著一股親切，你輕推門走了進去，其中最吸引你坐下的空間是？"
+        },
+        {
+            "question":"走出木屋，看著這片森林突然想起什麼，那個東西模糊的在你眼前成形，它可以是任何人事物，在這座森林出現一點也不意外。 (試著把聯想到的繪製下來吧！)"
+        },
+        {
+            "question":"就像幫這座森林拍一張大合照，已經把畫面刻印在靈魂很深很深的地方，這時那溫柔熟悉的觸感推著你往回走\n就是這裡了! 一感覺到沒有風，你便緩緩地坐下\n碰到草地覺得特別舒服，不如躺一下看看吧\n你躺了下去，感覺後腦杓觸碰到的感覺像是枕頭"
+        },
+        {
+            "question":"睜開眼，這是你房間的床上了，檯燈的光還亮著，已經是凌晨三點，聽到窗外有些風聲，是溫和的風繼續輕撫你的髮絲及臉龐，又開始產生點睡意了…"
+        }
+    ]
+    
+    let answersArr = [
+        {
+            "answers":""
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":[
+                ["A. 雖然很陰暗，但溫暖的風給你一股親切感，讓你並不害怕","A"],
+                ["B. 鬱鬱蔥蔥的森林，有道月光照射在一束鈴蘭","B"],
+                ["C. 在高聳參天的大樹樹根旁，有一小叢四葉幸運草","C"],
+                ["D. 奇形怪狀的樹林，在長滿青苔的岩石上居然冒出了幾朵靈芝","D"]
+            ]
+        },
+        {
+            "answers":[
+                ["A. 有隻正在和蝴蝶玩的棕熊","E"],
+                ["B. 有隻四處翻找東西的兔子","B"],
+                ["C. 有隻在舔舐手背整理鬃毛的獅子","C"],
+                ["D. 有隻直勾勾盯著你看的貓頭鷹","D"]
+            ]
+        },
+        {
+            "answers":[ //7
+                ["A. 晶瑩剔透的藍寶石項鍊","A"],
+                ["B. 有著簡易圖示的藏寶圖","B"],
+                ["C. 一隻活潑有靈性的蟋蟀","C"],
+                ["D. 一束新鮮漂亮的鬱金香","D"]
+            ]
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":[ //9
+                ["A. 整潔氣派、滿滿藏書的書房","A"],
+                ["B. 床鋪鬆軟、飄出淡淡清香的臥室","B"],
+                ["C. 燭光點綴、擺滿熱騰騰美食的餐桌","C"],
+                ["D. 微風徐徐、被優美景色包圍的露台","D"]
+            ]
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":""
+        },
+        {
+            "answers":""
+        }
+    ]
+
+    let questions = document.getElementById("question");
+    let option = document.getElementById("option");
+    // above is about question
+
+
+    // below is about img 
+    // load the imgs
+    let imgArr = [
+        "img/logo.jpg",
+        "img/分鏡1.2&13.jpg",
+        "",
+        "img/分鏡3.4.jpg",
+        "",
+        "img/分鏡5.jpg",
+        "img/分鏡6(初版).jpg",
+        "img/分鏡7.jpg",
+        "img/分鏡8-2.jpg",
+        "img/分鏡9.jpg",
+        "img/分鏡10.jpg",
+        "img/分鏡11.12.jpg",
+        "img/分鏡1.2&13.jpg"
+    ]
+
+    let img = document.getElementById("img"); // img target
+    let next = document.getElementById("next"); // next button dom
+    var i = 0;
+    defaultImg(imgArr, img, i, questionsArr,questions,answersArr,options);
+    next.addEventListener("click", ()=>{
+        nextFn(imgArr, img)
+    })
+
+    function nextFn(imgarr){
+        //let q1 = document.getElementById("option");
+        var obj=document.getElementsByName("option");
+        var selected=[];
+        //if(i>=1){
+            $("#options").empty();
+            for(let x = 0; x < answersArr[i].answers.length; x++){
+                //options.innerText = answersArr[i].answers[x];
+                $("#options").append(//用append 把選項內容放到options
+                        "<input name = 'options' type = 'radio' value ="+x+"> "+//點擊選擇這個按鈕 裡面的選擇的內容x
+                        "<label>"+answersArr[i].answers[x][0]+//第零題的第x個選項的內容
+                        "</label><br><br>"//br->空行(換行)
+                );
+            }
+        //}
+        i++;
+        img.src = imgarr[i];
+        questions.innerText = questionsArr[i].question;
+        
+    }
+    // above is about img 
+    function defaultImg(arr,img,index,q_arr,question,answersArr,options){
+        img.src = arr[index];
+        //question.innerText = q_arr[index].question;
+        //options.innerText = answersArr[index].answers[0];
+    }
+    
+
+    let finalAnswers={
+        "A":["扶桑花、向日葵"],
+        "E":["麥茶"],
+        "a":["出現志趣相投的夥伴或受到貴人助 （出現志趣相投的夥伴或受到貴人助"]
+    }
+</script>
+
+
+
+
+//測驗結果
